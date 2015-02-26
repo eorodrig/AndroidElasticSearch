@@ -16,8 +16,10 @@ import ca.ualberta.ssrg.movies.es.ESMovieManager;
 import ca.ualberta.ssrg.movies.es.Movie;
 import ca.ualberta.ssrg.movies.es.Movies;
 import ca.ualberta.ssrg.movies.es.MoviesController;
+import ca.ualberta.ssrg.movies.es.data.SearchResponse;
+import ca.ualberta.ssrg.movies.es.data.SimpleSearchCommand;
 
-public class MainActivity extends Activity {
+public class MainActivity<T> extends Activity {
 
 	private ListView movieList;
 	private Movies movies;
@@ -42,7 +44,7 @@ public class MainActivity extends Activity {
 		movies = new Movies();
 		moviesViewAdapter = new ArrayAdapter<Movie>(this, R.layout.list_item,movies);
 		movieList.setAdapter(moviesViewAdapter);
-		movieManager = new ESMovieManager("");
+		//movieManager = new ESMovieManager("");
 
 		// Show details when click on a movie
 		movieList.setOnItemClickListener(new OnItemClickListener() {
@@ -74,6 +76,13 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		movieManager = new ESMovieManager("");
+		
+		movies = movieManager.getMovies();
+		
+		moviesViewAdapter.notifyDataSetChanged();
+		
 		
 		
 
